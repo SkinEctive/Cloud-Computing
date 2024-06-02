@@ -6,3 +6,44 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  userId       String   @id @default(nanoid(8)) @db.Char(8)
+  userEmail    String   @unique @db.VarChar(200)
+  userFName    String   @db.VarChar(200)
+  userLName    String   @db.VarChar(200)
+  userPassword String   @db.VarChar(255)
+  userImgUrl   String?  @db.VarChar(255)
+  isAdmin      Boolean  @default(false)
+  createdAt    DateTime @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime @updatedAt
+
+  article Article[]
+  history History[]
+}
+
+model Disease {
+  diseaseId     String @id @default(nanoid(8)) @db.Char(8)
+  diseaseName   String @db.VarChar(200)
+  diseaseAdvice String @db.VarChar(255)
+
+  history History[]
+}
+
+model Article {
+  articleId     String @id @default(nanoid(8)) @db.Char(8)
+  articleAuthor String @db.Char(8)
+  articleTitle  String @db.VarChar(200)
+
+  user User @relation(fields: [articleAuthor], references: [userId], onDelete: Restrict, onUpdate: Restrict)
+}
+
+model History {
+  userId    String @db.Char(16)
+  diseaseId String @db.Char(16)
+
+  user    User    @relation(fields: [userId], references: [userId], onDelete: Restrict, onUpdate: Restrict)
+  disease Disease @relation(fields: [diseaseId], references: [diseaseId], onDelete: Restrict, onUpdate: Restrict)
+
+  @@id([userId, diseaseId])
+}
