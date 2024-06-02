@@ -1,36 +1,27 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const fs = require("node:fs");
+const fs = require("fs");
 
-const url = "https://guardianindonesia.co.id/perawatan-wajah.html?";
+const webUrl = "https://www.matahari.com/catalogsearch/result/?q=";
+const product_data = [];
 
-(async () => {
+async function getProduct(url) {
   try {
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
 
-    const products = [];
+    const product = $(".item.product.product-item");
+    product.each(function () {
+      productName = $(this).find(".product-item-link").text();
+      productImage = $(this).find(".product-image-photo").attr("data-src");
 
-    $(
-      ".product k24-thumb-md k24-df-on k24-df-direct-column k24-df-align-center k24-gap-4 k24-bgr-white k24-height-auto k24-width-30"
-    ).each((i, element) => {
-      const productName = $(element).find(".item-name-LPg").text().trim();
-      const productImage = $(element).find(".item-images--uD").attr("src");
-
-      products.push({
-        productName,
-        productImage,
-      });
+      product_data.push({ productName, productImage });
+      console.log(productName);
     });
-
-    // Convert array to JSON
-    fs.writeFile("productData.json", JSON.stringify(products), (err) => {
-      if (err) throw err;
-      console.log("file disimpen");
-    });
-
-    console.log(jsonData);
+    console.log(product_data);
   } catch (error) {
     console.error(error);
   }
-})();
+}
+
+getProduct(webUrl);
