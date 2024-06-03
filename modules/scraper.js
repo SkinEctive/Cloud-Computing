@@ -7,7 +7,7 @@ const product_data = [];
 
 async function getProduct(url) {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url + "batik");
     const $ = cheerio.load(response.data);
 
     const product = $(".item.product.product-item");
