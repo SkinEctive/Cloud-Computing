@@ -16,11 +16,16 @@ router.get("/", (req, res) => {
 });
 
 // Auth's routes
-router.post('/login', auth.login)
 router.post('/register', auth.register)
-router.delete('/logout', auth.logout)
+router.post('/login', auth.login)
+// router.delete('/logout', auth.logout)
 
 // User routes
-router.get('/users', authorizeToken, userController.getUsers)
+router.get('/users', userController.getAllUsers)
+router.get('/users/:userId', userController.getUserById)
+router.put('/users/:userId/changeDetails', userController.changeUserDetails)
+router.put('/users/:userId/changePassword', userController.changeUserPassword)
+router.delete('/users/:userId/delete', userController.deleteUser)
+
 
 module.exports = router;
