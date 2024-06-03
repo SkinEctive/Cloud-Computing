@@ -39,14 +39,14 @@ exports.getUserById = async (req, res) => {
         }
 
         res.status(200).json({
-            "status": true,
-            "message": "User profile retrieved successfully",
-            "data": user,
+            status: true,
+            message: "User profile retrieved successfully",
+            data: user,
         })
     } catch {
         res.status(500).json({
-            "status": false,
-            "message": "An unexpected error occurred on the server",
+            status: false,
+            message: "An unexpected error occurred on the server",
         })
     }
 };
@@ -55,13 +55,15 @@ exports.changeUserDetails = async (req, res) => {
     const { fName, lName, email } = req.body;
     const { userId } = req.params;
     // console.log(fName, lName, email);
+    console.log("sampe method change");
+    const updatedData = {};
+
+
 
     try {
         const user = await prisma.user.findUnique({
             where: { userId: userId }
         });
-
-
 
         if (!user) {
             return res.status(404).json({
@@ -69,14 +71,8 @@ exports.changeUserDetails = async (req, res) => {
                 message: 'User not found.',
             });
         }
-
-
-
-        // Prepare updated data
-        const updatedData = {};
         if (fName !== undefined) updatedData.userFName = fName;
         if (lName !== undefined) updatedData.userLName = lName;
-
         if (email !== undefined) {
             const userEmailExist = await prisma.user.findUnique({
                 where: {
@@ -94,17 +90,45 @@ exports.changeUserDetails = async (req, res) => {
             updatedData.userEmail = email;
         }
 
-        // Update user data
-        const updatedUser = await prisma.user.update({
-            where: { userId: userId },
-            data: updatedData,
-        });
 
-        res.status(200).json({
-            status: true,
-            message: "User updated successfully.",
-            data: updatedUser,
-        });
+        if (!req.file) {
+
+            console.log("userImageUrl = " + user.userImgUrl);
+            // Update user data
+            const updatedUser = await prisma.user.update({
+                where: { userId: userId },
+                data: updatedData,
+            });
+
+            return res.status(200).json({
+                status: true,
+                message: "User updated successfully.",
+                data: updatedUser,
+            });
+
+
+        } else if (req.file && req.file.cloudStoragePublicUrl) {
+            imageUrl = req.file.cloudStoragePublicUrl
+            updatedData.userImgUrl = imageUrl;
+            console.log("imageUrl = " + imageUrl);
+            console.log("userImageUrl = " + user.userImgUrl);
+
+
+
+            // Update user data
+            const updatedUser = await prisma.user.update({
+                where: { userId: userId },
+                data: updatedData,
+            });
+
+            return res.status(200).json({
+                status: true,
+                message: "User updated successfully.",
+                data: updatedUser,
+            });
+
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -114,9 +138,12 @@ exports.changeUserDetails = async (req, res) => {
     }
 };
 
+
 exports.changeUserPassword = async (req, res) => {
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
     const { userId } = req.params;
+
+
 
     try {
         const user = await prisma.user.findUnique({
