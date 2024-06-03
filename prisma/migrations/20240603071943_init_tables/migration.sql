@@ -1,14 +1,14 @@
 -- CreateTable
 CREATE TABLE `User` (
-    `userId` CHAR(8) NOT NULL,
+    `userId` CHAR(16) NOT NULL,
     `userEmail` VARCHAR(200) NOT NULL,
     `userFName` VARCHAR(200) NOT NULL,
     `userLName` VARCHAR(200) NOT NULL,
     `userPassword` VARCHAR(255) NOT NULL,
     `userImgUrl` VARCHAR(255) NULL,
-    `isAdmin` BOOLEAN NOT NULL,
+    `isAdmin` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
-    `updatedAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `User_userEmail_key`(`userEmail`),
     PRIMARY KEY (`userId`)
@@ -16,7 +16,7 @@ CREATE TABLE `User` (
 
 -- CreateTable
 CREATE TABLE `Disease` (
-    `diseaseId` CHAR(8) NOT NULL,
+    `diseaseId` CHAR(16) NOT NULL,
     `diseaseName` VARCHAR(200) NOT NULL,
     `diseaseAdvice` VARCHAR(255) NOT NULL,
 
@@ -25,9 +25,10 @@ CREATE TABLE `Disease` (
 
 -- CreateTable
 CREATE TABLE `Article` (
-    `articleId` CHAR(8) NOT NULL,
-    `articleAuthor` CHAR(8) NOT NULL,
+    `articleId` CHAR(16) NOT NULL,
+    `articleAuthor` CHAR(16) NOT NULL,
     `articleTitle` VARCHAR(200) NOT NULL,
+    `createdAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
     PRIMARY KEY (`articleId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

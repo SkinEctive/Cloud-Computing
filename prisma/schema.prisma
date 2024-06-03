@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  userId       String   @id @default(nanoid(8)) @db.Char(8)
+  userId       String   @id @default(nanoid(16)) @db.Char(16)
   userEmail    String   @unique @db.VarChar(200)
   userFName    String   @db.VarChar(200)
   userLName    String   @db.VarChar(200)
@@ -23,7 +23,7 @@ model User {
 }
 
 model Disease {
-  diseaseId     String @id @default(nanoid(8)) @db.Char(8)
+  diseaseId     String @id @default(nanoid(16)) @db.Char(16)
   diseaseName   String @db.VarChar(200)
   diseaseAdvice String @db.VarChar(255)
 
@@ -31,8 +31,8 @@ model Disease {
 }
 
 model Article {
-  articleId     String   @id @default(nanoid(8)) @db.Char(8)
-  articleAuthor String   @db.Char(8)
+  articleId     String   @id @default(nanoid(16)) @db.Char(16)
+  articleAuthor String   @db.Char(16)
   articleTitle  String   @db.VarChar(200)
   createdAt     DateTime @default(now()) @db.Timestamp(0)
 
