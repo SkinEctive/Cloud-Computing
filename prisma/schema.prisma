@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  userId       String   @id @default(nanoid(8)) @db.Char(8)
+  userId       String   @id @default(nanoid(16)) @db.Char(16)
   userEmail    String   @unique @db.VarChar(200)
   userFName    String   @db.VarChar(200)
   userLName    String   @db.VarChar(200)
@@ -19,32 +19,36 @@ model User {
   updatedAt    DateTime @updatedAt
 
   article Article[]
-  history History[]
+  history PredictHistory[]
 }
 
 model Disease {
-  diseaseId     String @id @default(nanoid(8)) @db.Char(8)
+  diseaseId     String @id @default(nanoid(16)) @db.Char(16)
   diseaseName   String @db.VarChar(200)
   diseaseAdvice String @db.VarChar(255)
 
-  history History[]
+  history PredictHistory[]
 }
 
 model Article {
-  articleId     String   @id @default(nanoid(8)) @db.Char(8)
-  articleAuthor String   @db.Char(8)
-  articleTitle  String   @db.VarChar(200)
-  createdAt     DateTime @default(now()) @db.Timestamp(0)
+  articleId      String   @id @default(nanoid(16)) @db.Char(16)
+  articleAuthor  String   @db.Char(16)
+  articleTitle   String   @db.VarChar(200)
+  articleContent String   @db.Text
+  createdAt      DateTime @default(now()) @db.Timestamp(0)
 
   user User @relation(fields: [articleAuthor], references: [userId], onDelete: Restrict, onUpdate: Restrict)
 }
 
-model History {
-  userId    String @db.Char(16)
-  diseaseId String @db.Char(16)
+model PredictHistory {
+  predictHistoryId String   @id @default(nanoid(16)) @db.Char(16)
+  userId           String   @db.Char(16)
+  diseaseId        String   @db.Char(16)
+  historyImgUrl    String   @db.VarChar(255)
+  createdAt        DateTime @default(now()) @db.Timestamp(0)
 
   user    User    @relation(fields: [userId], references: [userId], onDelete: Restrict, onUpdate: Restrict)
   disease Disease @relation(fields: [diseaseId], references: [diseaseId], onDelete: Restrict, onUpdate: Restrict)
 
-  @@id([userId, diseaseId])
+  // @@id([userId, diseaseId])
 }
