@@ -4,6 +4,8 @@ const auth = require("../middleware/auth");
 const authorizeToken = require("../middleware/authorizeToken");
 const userController = require("../controller/userController");
 const articleController = require("../controller/articleController");
+const diseaseController = require("../controller/diseaseController");
+const modelController = require("../controller/detectController");
 const storage = require("../modules/storage");
 const Multer = require('multer');
 const multer = Multer({
@@ -42,6 +44,12 @@ router.get('/articles', articleController.getAllArticles)
 router.get('/articles/:articleId', articleController.getArticlesById)
 router.post('/articles/:userId/create', articleController.createArticle)
 router.delete('/articles/:userId/delete', articleController.deleteArticle)
+
+// Disease routes
+router.post('/disease/:userId/add', diseaseController.addDisease)
+
+// Detect History Routes
+
 
 
 module.exports = router;

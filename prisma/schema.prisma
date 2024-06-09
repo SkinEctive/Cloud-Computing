@@ -19,15 +19,15 @@ model User {
   updatedAt    DateTime @updatedAt
 
   article Article[]
-  history PredictHistory[]
+  history DetectHistory[]
 }
 
 model Disease {
-  diseaseId     String @id @default(nanoid(16)) @db.Char(16)
+  diseaseId     String @id @db.Char(8)
   diseaseName   String @db.VarChar(200)
-  diseaseAdvice String @db.VarChar(255)
+  diseaseAdvice String @db.Text
 
-  history PredictHistory[]
+  history DetectHistory[]
 }
 
 model Article {
@@ -40,12 +40,12 @@ model Article {
   user User @relation(fields: [articleAuthor], references: [userId], onDelete: Restrict, onUpdate: Restrict)
 }
 
-model PredictHistory {
-  predictHistoryId String   @id @default(nanoid(16)) @db.Char(16)
-  userId           String   @db.Char(16)
-  diseaseId        String   @db.Char(16)
-  historyImgUrl    String   @db.VarChar(255)
-  createdAt        DateTime @default(now()) @db.Timestamp(0)
+model DetectHistory {
+  detectHistoryId String   @id @default(nanoid(16)) @db.Char(16)
+  userId          String   @db.Char(16)
+  diseaseId       String   @db.Char(8)
+  historyImgUrl   String   @db.VarChar(255)
+  createdAt       DateTime @default(now()) @db.Timestamp(0)
 
   user    User    @relation(fields: [userId], references: [userId], onDelete: Restrict, onUpdate: Restrict)
   disease Disease @relation(fields: [diseaseId], references: [diseaseId], onDelete: Restrict, onUpdate: Restrict)
