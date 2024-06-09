@@ -8,24 +8,30 @@
 
 ## API Endpoints
 
-| Endpoint                      | Method | Input                                          | Description                   | Status      |
-| ----------------------------- | ------ | ---------------------------------------------- | ----------------------------- | ----------- |
-| /register                     | POST   | email, fName, lName, password, confirmPassword | Register new account          | ✅ Completed |
-| /login                        | POST   | email, password                                | Login to application          | ✅ Completed |
-| /users                        | GET    | -                                              | Get all users data            | ✅ Completed |
-| /users/:userId                | GET    | userId                                         | Get user data by ID           | ✅ Completed |
-| /users/:userId/changeDetails  | POST   | email, fName, lName (optional)                 | Update user's data            | ✅ Completed |
-| /users/:userId/changePassword | POST   | oldPassword, newPassword, confirmNewPassword   | Update user's password        | ✅ Completed |
-| /users/:userId/delete         | DELETE | -                                              | Remove user's account         | ✅ Completed |
-| /articles                     | GET    | -                                              | Get all articles data         | ✅ Completed |
-| /articles/:articleId          | GET    | articleId                                      | Get article data by ID        | ✅ Completed |
-| /articles/:userId/create      | POST   | title, content                                 | Create data                   | ✅ Completed |
-| /articles/:userId/delete      | DELETE | articleId                                      | Remove selected article       | ✅ Completed |
-| /diseases                     | GET    | -                                              | Get all diseases data         | 🟠 Ongoing   |
-| /diseases/:diseaseId          | GET    | diseaseId                                      | Get diseases data by ID       | 🟠 Ongoing   |
-| /prediction/:userId           | POST   | image                                          | Post a prediction             | 🟠 Ongoing   |
-| /prediction/history           | GET    | -                                              | Get all predictions           | 🟠 Ongoing   |
-| /prediction/history/:userId   | GET    | -                                              | Get predictions by predict_id | 🟠 Ongoing   |
+| Endpoint                      | Method | Input                                          | Description                  | Status      |
+| ----------------------------- | ------ | ---------------------------------------------- | ---------------------------- | ----------- |
+| /register                     | POST   | email, fName, lName, password, confirmPassword | Register new account         | ✅ Completed |
+| /login                        | POST   | email, password                                | Login to application         | ✅ Completed |
+| /users                        | GET    | -                                              | Get all users data           | ✅ Completed |
+| /users/:userId                | GET    | userId                                         | Get user data by ID          | ✅ Completed |
+| /users/:userId/changeDetails  | POST   | email, fName, lName (optional)                 | Update user's data           | ✅ Completed |
+| /users/:userId/changePassword | POST   | oldPassword, newPassword, confirmNewPassword   | Update user's password       | ✅ Completed |
+| /users/:userId/delete         | DELETE | -                                              | Remove user's account        | ✅ Completed |
+| /articles                     | GET    | -                                              | Get all articles data        | ✅ Completed |
+| /articles/:articleId          | GET    | articleId                                      | Get article data by ID       | ✅ Completed |
+| /articles/:userId/create      | POST   | title, content                                 | Create data                  | ✅ Completed |
+| /articles/:userId/delete      | DELETE | articleId                                      | Remove selected article      | ✅ Completed |
+| /diseases                     | GET    | -                                              | Get all diseases data        | ✅ Completed |
+| /diseases/:diseaseId          | GET    | diseaseId                                      | Get diseases data by ID      | ✅ Completed |
+| /disease/:userId/add          | POST   | diseaseId, diseaseName, diseaseAdvice          | Post new disease to database | ✅ Completed |
+
+## Machine Learning Endpoints
+
+To run the SkinEctive's Machine Learning Endpoints, access the link below:
+
+```http
+  http://localhost:8080/
+```
 
 ## How to run this API on your local machine 💻
 
