@@ -45,10 +45,9 @@ router.post('/articles/:userId/create', articleController.createArticle)
 router.delete('/articles/:userId/delete', articleController.deleteArticle)
 
 // Disease routes
+router.get('/disease', diseaseController.getAllDiseases)
+router.get('/disease/:diseaseId', diseaseController.getDiseaseById)
 router.post('/disease/:userId/add', diseaseController.addDisease)
-
-// Detect History Routes
-
 
 
 module.exports = router;

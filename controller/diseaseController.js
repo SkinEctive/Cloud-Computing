@@ -1,5 +1,52 @@
 const prisma = require("../prisma/prisma");
 
+exports.getAllDiseases = async (req, res) => {
+    try {
+        const disease = await prisma.disease.findMany();
+        res.status(200).json({
+            status: true,
+            message: "All diseases",
+            data: disease,
+        });
+    } catch (error) {
+        console.error("Error retrieving diseases:", error);
+        res.status(500).json({
+            status: false,
+            message: "An unexpected error occurred while retrieving diseases.",
+        });
+    }
+};
+
+exports.getDiseaseById = async (req, res) => {
+    const { diseaseId } = req.params;
+
+    try {
+        const disease = await prisma.disease.findUnique({
+            where: {
+                diseaseId: diseaseId
+            }
+        });
+
+        if (!disease) {
+            return res.status(404).json({
+                status: false,
+                message: "Disease not found.",
+            });
+        }
+
+        res.status(200).json({
+            status: true,
+            message: "Disease retrieved successfully",
+            data: disease,
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "An unexpected error occurred while retrieving diseases.",
+        });
+    }
+};
+
 exports.addDisease = async (req, res) => {
     const { id, name, advice } = req.body;
     const { userId } = req.params;
