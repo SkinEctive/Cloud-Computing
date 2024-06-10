@@ -2,33 +2,32 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 
-const webUrl =
-  "https://www.bukalapak.com/products?from=omnisearch&from_keyword_history=false&search%5Bkeywords%5D=skincare&search_source=omnisearch_keyword&source=navbar";
+const webUrl = "https://www.beautyhaul.com/search?q=";
 const product_data = [];
 
 async function getProduct(url) {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url + "face");
     const $ = cheerio.load(response.data);
 
-    const product = $(".te-product-card.bl-product-card-new");
+    const product = $(".btn-block");
     product.each(function () {
-      // productName = $(this).find("a.bl-link").text();
-      // productImage = $(this).find("a.bl-thumbnail--img").prop("src");
+      productImage = $(this).find(".img-max").attr("src");
+      productName = $(this).find(".title").text();
 
-      productName = $(this)
-        .find("section.bl-product-card-new__name.a.bl-link")
-        .text()
-        .trim();
-      productImage = $(this).find("figure.bl-thumbnail.img").attr("src");
-      product_data.push({ productName, productImage });
-      console.log(productName);
+      // console.log(productName);
+
+      product_data.slice(10).push({ productName, productImage });
     });
 
-    // fs.writeFile("productData.json", JSON.stringify(product_data), (err) => {
-    //   if (err) throw err;
-    //   console.log("file disimpen");
-    // });
+    // fs.writeFile(
+    //   "productData.json",
+    //   JSON.stringify(product_data.slice(1, 12)),
+    //   (err) => {
+    //     if (err) throw err;
+    //     console.log("file disimpen");
+    //   }
+    // );
     console.log(product_data);
   } catch (error) {
     console.error(error);
