@@ -8,7 +8,7 @@ const diseaseController = require("../controller/diseaseController");
 const {
   searchClinic,
   searchClinicByKeyword,
-} = require("../controller/clinicController");
+} = require("../modules/clinic");
 const storage = require("../modules/storage");
 const Multer = require("multer");
 const multer = Multer({
