@@ -18,7 +18,8 @@ CREATE TABLE `User` (
 CREATE TABLE `Disease` (
     `diseaseId` CHAR(8) NOT NULL,
     `diseaseName` VARCHAR(200) NOT NULL,
-    `diseaseAdvice` VARCHAR(255) NOT NULL,
+    `diseaseDescription` TEXT NOT NULL,
+    `diseaseAction` TEXT NOT NULL,
 
     PRIMARY KEY (`diseaseId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
