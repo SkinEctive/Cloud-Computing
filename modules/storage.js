@@ -15,13 +15,12 @@ const cloudStorage = new Storage({
 const bucketName = "skinective"
 const bucket = cloudStorage.bucket(bucketName)
 
-function getProfileImgUrl(filename) {
+function getImgUrl(filename) {
     return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
 }
 
-exports.uploadToCloudStorage = (req, res, next) => {
-    console.log(pathKey);
-    console.log("sampe method upload");
+exports.uploadProfileImgToCloudStorage = (req, res, next) => {
+
     if (!req.file) return next()
 
     const uploadedFileName = `usersProfileImage/${nanoid(8)}`;
@@ -40,13 +39,40 @@ exports.uploadToCloudStorage = (req, res, next) => {
 
     stream.on('finish', () => {
         req.file.cloudStorageObject = uploadedFileName
-        req.file.cloudStoragePublicUrl = getProfileImgUrl(uploadedFileName)
+        req.file.cloudStoragePublicUrl = getImgUrl(uploadedFileName)
         next()
         // res.send(req.file.cloudStoragePublicUrl)
     })
 
     stream.end(req.file.buffer)
     console.log(req.file.cloudStoragePublicUrl);
-    console.log("akhir method upload");
 }
 
+exports.uploadArticleImgToCloudStorage = (req, res, next) => {
+
+    if (!req.file) return next()
+
+    const uploadedFileName = `articleImage/${nanoid(8)}`;
+    const uploadedFile = bucket.file(uploadedFileName)
+
+    const stream = uploadedFile.createWriteStream({
+        metadata: {
+            contentType: req.file.mimetype
+        }
+    })
+
+    stream.on('error', (err) => {
+        req.file.cloudStorageError = err
+        next(err)
+    })
+
+    stream.on('finish', () => {
+        req.file.cloudStorageObject = uploadedFileName
+        req.file.cloudStoragePublicUrl = getImgUrl(uploadedFileName)
+        next()
+        // res.send(req.file.cloudStoragePublicUrl)
+    })
+
+    stream.end(req.file.buffer)
+    console.log(req.file.cloudStoragePublicUrl);
+}

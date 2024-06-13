@@ -55,7 +55,6 @@ exports.changeUserDetails = async (req, res) => {
     const { fName, lName, email } = req.body;
     const { userId } = req.params;
     // console.log(fName, lName, email);
-    console.log("sampe method change");
     const updatedData = {};
 
 

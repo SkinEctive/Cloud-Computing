@@ -51,7 +51,9 @@ exports.getArticlesById = async (req, res) => {
 exports.createArticle = async (req, res) => {
   const { title, content } = req.body;
   const { userId } = req.params;
-  console.log(userId, title, content);
+  imageUrl = req.file.cloudStoragePublicUrl
+  console.log(userId, title, content, imageUrl);
+  // const defaultImgUrl = 'https://storage.googleapis.com/skinective/articleImage/defaultArticleImg.png';
 
   const user = await prisma.user.findUnique({
     where: {
@@ -91,6 +93,7 @@ exports.createArticle = async (req, res) => {
         articleAuthor: userId,
         articleTitle: title,
         articleContent: content,
+        articleImgUrl: imageUrl
       },
     });
     res.status(201).json({
