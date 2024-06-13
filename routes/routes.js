@@ -6,11 +6,9 @@ const userController = require("../controller/userController");
 const articleController = require("../controller/articleController");
 const diseaseController = require("../controller/diseaseController");
 const {
-  cariKlinik,
-  cariKlinikDenganKeyword,
   searchClinic,
   searchClinicByKeyword,
-} = require("../controller/klinikController");
+} = require("../controller/clinicController");
 const storage = require("../modules/storage");
 const Multer = require("multer");
 const multer = Multer({

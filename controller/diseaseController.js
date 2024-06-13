@@ -48,7 +48,7 @@ exports.getDiseaseById = async (req, res) => {
 };
 
 exports.addDisease = async (req, res) => {
-    const { id, name, advice } = req.body;
+    const { id, name, description, action } = req.body;
     const { userId } = req.params;
 
     // Check if the user is an admin
@@ -101,7 +101,8 @@ exports.addDisease = async (req, res) => {
             data: {
                 diseaseId: id,
                 diseaseName: name,
-                diseaseAdvice: advice
+                diseaseDescription: description,
+                diseaseAction: action,
             },
         });
         res.status(201).json({

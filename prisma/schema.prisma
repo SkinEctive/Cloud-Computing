@@ -23,9 +23,10 @@ model User {
 }
 
 model Disease {
-  diseaseId     String @id @db.Char(8)
-  diseaseName   String @db.VarChar(200)
-  diseaseAdvice String @db.Text
+  diseaseId          String @id @db.Char(8)
+  diseaseName        String @db.VarChar(200)
+  diseaseDescription String @db.Text
+  diseaseAction      String @db.Text
 
   history DetectHistory[]
 }
