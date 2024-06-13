@@ -37,6 +37,7 @@ model Article {
   articleAuthor  String   @db.Char(16)
   articleTitle   String   @db.VarChar(200)
   articleContent String   @db.Text
+  articleImgUrl  String?  @db.VarChar(255)
   createdAt      DateTime @default(now()) @db.Timestamp(0)
 
   user User @relation(fields: [articleAuthor], references: [userId], onDelete: Restrict, onUpdate: Restrict)

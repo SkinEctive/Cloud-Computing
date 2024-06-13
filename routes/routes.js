@@ -39,7 +39,7 @@ router.get("/users/:userId", userController.getUserById);
 router.put(
   "/users/:userId/changeDetails",
   multer.single("IMAGE"),
-  storage.uploadToCloudStorage,
+  storage.uploadProfileImgToCloudStorage,
   userController.changeUserDetails
 );
 router.put("/users/:userId/changePassword", userController.changeUserPassword);
@@ -48,7 +48,7 @@ router.delete("/users/:userId/delete", userController.deleteUser);
 // Article routes
 router.get("/articles", articleController.getAllArticles);
 router.get("/articles/:articleId", articleController.getArticlesById);
-router.post("/articles/:userId/create", articleController.createArticle);
+router.post("/articles/:userId/create", multer.single("IMAGE"), storage.uploadArticleImgToCloudStorage, articleController.createArticle);
 router.delete("/articles/:userId/delete", articleController.deleteArticle);
 
 // Disease routes
