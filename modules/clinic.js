@@ -1,9 +1,10 @@
 const axios = require("axios");
 require("dotenv").config();
 
-async function searchClinic(req, res) {
+async function searchClinic(latitude, longitude) {
+  // console.log(req.params)
   try {
-    const { latitude, longitude } = req.body;
+    // const { latitude, longitude } = req.body;
     const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&keyword=klinik%20kecantikan&key=${API_KEY}`;
@@ -53,23 +54,23 @@ async function searchClinic(req, res) {
     });
 
     const clinic = await Promise.all(clinicPromises);
-    res.json({ clinic });
+    return clinic
   } catch (error) {
     console.error("Terjadi kesalahan:", error);
-    res
-      .status(500)
-      .json({ error: "Terjadi kesalahan saat mencari klinik kecantikan." });
+    throw new Error("Terjadi kesalahan saat mencari klinik kecantikan.");
   }
 }
 
-async function searchClinicByKeyword(req, res) {
+async function searchClinicByKeyword(keyword) {
   try {
-    const { keyword } = req.body;
+    console.log(keyword)
     const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(
       keyword
     )}&type=beauty_salon&key=${API_KEY}`;
+
+    console.log(url)
 
     const response = await axios.get(url);
     const results = response.data.results;
@@ -111,12 +112,10 @@ async function searchClinicByKeyword(req, res) {
     });
 
     const clinic = await Promise.all(clinicPromises);
-    res.json({ clinic });
+    return clinic;
   } catch (error) {
     console.error("Terjadi kesalahan:", error);
-    res
-      .status(500)
-      .json({ error: "Terjadi kesalahan saat mencari klinik kecantikan." });
+    throw new Error("Terjadi kesalahan saat mencari klinik kecantikan.");
   }
 }
 

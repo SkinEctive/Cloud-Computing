@@ -2,7 +2,7 @@ const clinic = require("../modules/clinic");
 
 exports.searchByLocation = async (req, res) => {
   const { latitude, longitude } = req.body;
-  console.log(req.body);
+  console.log(latitude, longitude);
 
   try {
     const data = await clinic.searchClinic(latitude, longitude);
