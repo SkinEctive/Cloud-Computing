@@ -3,7 +3,7 @@ require("dotenv").config();
 
 async function searchClinic(req, res) {
   try {
-    const { latitude, longitude } = req.query;
+    const { latitude, longitude } = req.body;
     const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&keyword=klinik%20kecantikan&key=${API_KEY}`;
@@ -64,7 +64,7 @@ async function searchClinic(req, res) {
 
 async function searchClinicByKeyword(req, res) {
   try {
-    const { keyword } = req.query;
+    const { keyword } = req.body;
     const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(

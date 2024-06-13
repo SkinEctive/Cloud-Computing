@@ -5,10 +5,7 @@ const authorizeToken = require("../middleware/authorizeToken");
 const userController = require("../controller/userController");
 const articleController = require("../controller/articleController");
 const diseaseController = require("../controller/diseaseController");
-const {
-  searchClinic,
-  searchClinicByKeyword,
-} = require("../modules/clinic");
+const clinicController = require("../controller/clinicController");
 const storage = require("../modules/storage");
 const Multer = require("multer");
 const multer = Multer({
@@ -48,7 +45,12 @@ router.delete("/users/:userId/delete", userController.deleteUser);
 // Article routes
 router.get("/articles", articleController.getAllArticles);
 router.get("/articles/:articleId", articleController.getArticlesById);
-router.post("/articles/:userId/create", multer.single("IMAGE"), storage.uploadArticleImgToCloudStorage, articleController.createArticle);
+router.post(
+  "/articles/:userId/create",
+  multer.single("IMAGE"),
+  storage.uploadArticleImgToCloudStorage,
+  articleController.createArticle
+);
 router.delete("/articles/:userId/delete", articleController.deleteArticle);
 
 // Disease routes
@@ -57,7 +59,7 @@ router.get("/disease/:diseaseId", diseaseController.getDiseaseById);
 router.post("/disease/:userId/add", diseaseController.addDisease);
 
 // Maps routes
-router.get("/clinic", searchClinic);
-router.get("/clinic/search", searchClinicByKeyword);
+router.get("/clinic/location", clinicController.searchByLocation);
+router.get("/clinic/search", clinicController.searchByKeyword);
 
 module.exports = router;

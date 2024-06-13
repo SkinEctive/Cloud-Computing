@@ -1,10 +1,11 @@
 const clinic = require("../modules/clinic");
 
 exports.searchByLocation = async (req, res) => {
-  const { latitude, longitude } = req.query;
+  const { latitude, longitude } = req.body;
+  console.log(req.body);
 
   try {
-    const data = await clinic.searchByLocation(latitude, longitude);
+    const data = await clinic.searchClinic(latitude, longitude);
     return res.status(200).json({
       status: true,
       message: "Data retrieved successfully",
@@ -21,10 +22,11 @@ exports.searchByLocation = async (req, res) => {
 };
 
 exports.searchByKeyword = async (req, res) => {
-  const { keyword } = req.query;
+  const { keyword } = req.body;
+  console.log(keyword);
 
   try {
-    const data = await clinic.searchByKeyword(keyword);
+    const data = await clinic.searchClinicByKeyword(keyword);
     return res.status(200).json({
       status: true,
       message: "Data retrieved successfully",
