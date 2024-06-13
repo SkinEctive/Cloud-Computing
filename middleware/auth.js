@@ -11,7 +11,7 @@ function generateAccessToken(payload) {
 }
 
 exports.register = async (req, res) => {
-  const { email, fName, lName, password, confirmPassword } = req.body;
+  const { email, fName, lName, age, password, confirmPassword } = req.body;
   const defaultImgUrl = 'https://storage.googleapis.com/skinective/usersProfileImage/defaultImg';
 
   if (password !== confirmPassword) {
@@ -43,6 +43,7 @@ exports.register = async (req, res) => {
         userEmail: email,
         userFName: fName,
         userLName: lName,
+        userAge: age,
         userPassword: hashedPassword,
         userImgUrl: defaultImgUrl
       },
