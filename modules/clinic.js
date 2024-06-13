@@ -11,6 +11,7 @@ async function searchClinic(latitude, longitude) {
 
     const response = await axios.get(url);
     const results = response.data.results;
+    console.log(results)
 
     const clinicPromises = results.map(async (place) => {
       const photoUrl = place.photos
@@ -41,8 +42,13 @@ async function searchClinic(latitude, longitude) {
         jamTutup = period.close ? period.close.time : "";
       }
 
+      const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+      const lat = place.geometry.location.lat;
+      const lng = place.geometry.location.lng;
+
       return {
         nama: place.name,
+        mapsUrl: mapsUrl,
         alamat: place.vicinity,
         rating: place.rating,
         fotoUrl: photoUrl,
@@ -50,6 +56,8 @@ async function searchClinic(latitude, longitude) {
         jamBuka,
         jamTutup,
         nomorHP: phoneNumber,
+        latitude: lat,
+        longitude: lng,
       };
     });
 
@@ -100,14 +108,21 @@ async function searchClinicByKeyword(keyword) {
         jamTutup = period.close ? period.close.time : "";
       }
 
+      const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+      const lat = place.geometry.location.lat;
+      const lng = place.geometry.location.lng;
+
       return {
         nama: place.name,
+        mapsUrl: mapsUrl,
         alamat: place.formatted_address,
         rating: place.rating,
         fotoUrl: photoUrl,
         jamBuka,
         jamTutup,
         nomorHP: phoneNumber,
+        latitude: lat,
+        longitude: lng,
       };
     });
 

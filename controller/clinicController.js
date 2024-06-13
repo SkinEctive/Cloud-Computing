@@ -7,7 +7,7 @@ exports.searchByLocation = async (req, res) => {
   if (!latitude || !longitude) {
     return res.status(400).json({
       status: false,
-      message: "Latitude dan longitude kosong",
+      message: "Latitude atau longitude kosong",
     });
   }
 
