@@ -5,12 +5,14 @@ async function searchClinic(latitude, longitude) {
   // console.log(req.params)
   try {
     // const { latitude, longitude } = req.body;
-    const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+    const API_KEY = "AIzaSyCzEBpdGGx27jaQmXeY47Txi6s0vKhIvM0";
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&keyword=klinik%20kecantikan&key=${API_KEY}`;
 
+    console.log(url);
     const response = await axios.get(url);
     const results = response.data.results;
+    console.log(results)
 
     const clinicPromises = results.map(async (place) => {
       const photoUrl = place.photos
@@ -41,8 +43,13 @@ async function searchClinic(latitude, longitude) {
         jamTutup = period.close ? period.close.time : "";
       }
 
+      const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+      const lat = place.geometry.location.lat;
+      const lng = place.geometry.location.lng;
+
       return {
         nama: place.name,
+        mapsUrl: mapsUrl,
         alamat: place.vicinity,
         rating: place.rating,
         fotoUrl: photoUrl,
@@ -50,6 +57,8 @@ async function searchClinic(latitude, longitude) {
         jamBuka,
         jamTutup,
         nomorHP: phoneNumber,
+        latitude: lat,
+        longitude: lng,
       };
     });
 
@@ -100,14 +109,21 @@ async function searchClinicByKeyword(keyword) {
         jamTutup = period.close ? period.close.time : "";
       }
 
+      const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+      const lat = place.geometry.location.lat;
+      const lng = place.geometry.location.lng;
+
       return {
         nama: place.name,
+        mapsUrl: mapsUrl,
         alamat: place.formatted_address,
         rating: place.rating,
         fotoUrl: photoUrl,
         jamBuka,
         jamTutup,
         nomorHP: phoneNumber,
+        latitude: lat,
+        longitude: lng,
       };
     });
 
