@@ -5,6 +5,7 @@ const authorizeToken = require("../middleware/authorizeToken");
 const userController = require("../controller/userController");
 const articleController = require("../controller/articleController");
 const diseaseController = require("../controller/diseaseController");
+const scraperController = require("../controller/scraperController");
 const clinicController = require("../controller/clinicController");
 const storage = require("../modules/storage");
 const Multer = require("multer");
@@ -57,6 +58,9 @@ router.delete("/articles/:userId/delete", articleController.deleteArticle);
 router.get("/disease", diseaseController.getAllDiseases);
 router.get("/disease/:diseaseId", diseaseController.getDiseaseById);
 router.post("/disease/:userId/add", diseaseController.addDisease);
+
+// Scraper routes
+router.get("/scraper", scraperController.makeScrap);
 
 // Maps routes
 router.get("/clinic/location", clinicController.searchByLocation);

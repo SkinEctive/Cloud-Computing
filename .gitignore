@@ -2,3 +2,7 @@
 node_modules
 request.rest
 service.json
+package.json
+package-lock.json
+test.rest
+productData.json
