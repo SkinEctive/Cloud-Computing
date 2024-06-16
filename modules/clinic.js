@@ -5,7 +5,7 @@ async function searchClinic(latitude, longitude) {
   // console.log(req.params)
   try {
     // const { latitude, longitude } = req.body;
-    const API_KEY = "AIzaSyCzEBpdGGx27jaQmXeY47Txi6s0vKhIvM0";
+    const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&keyword=klinik%20kecantikan&key=${API_KEY}`;
 
