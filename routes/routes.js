@@ -60,10 +60,10 @@ router.get("/disease/:diseaseId", diseaseController.getDiseaseById);
 router.post("/disease/:userId/add", diseaseController.addDisease);
 
 // Scraper routes
-router.get("/scraper", scraperController.makeScrap);
+router.post("/scraper", scraperController.makeScrap);
 
 // Maps routes
-router.get("/clinic/location", clinicController.searchByLocation);
-router.get("/clinic/search", clinicController.searchByKeyword);
+router.post("/clinic/location", clinicController.searchByLocation);
+router.post("/clinic/search", clinicController.searchByKeyword);
 
 module.exports = router;

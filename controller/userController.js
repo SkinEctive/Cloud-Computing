@@ -1,8 +1,6 @@
 const prisma = require("../prisma/prisma")
 const bcrypt = require("bcrypt")
 
-
-
 exports.getAllUsers = async (req, res) => {
     try {
         const user = await prisma.user.findMany();
