@@ -1,4 +1,4 @@
-const scraper = require("../modules/scraper")
+const scraper = require("../modules/scraper");
 
 exports.makeScrap = async (req, res) => {
   const { keyword } = req.body;
