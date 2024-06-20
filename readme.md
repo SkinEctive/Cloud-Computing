@@ -14,7 +14,7 @@
 | /login                        | POST   | email, password                                | Login to application         | ✅ Completed |
 | /users                        | GET    | -                                              | Get all users data           | ✅ Completed |
 | /users/:userId                | GET    | userId                                         | Get user data by ID          | ✅ Completed |
-| /users/:userId/changeDetails  | POST   | email, fName, lName (optional)                 | Update user's data           | ✅ Completed |
+| /users/:userId/changeDetails  | POST   | email, fName, lName (optional), age            | Update user's data           | ✅ Completed |
 | /users/:userId/changePassword | POST   | oldPassword, newPassword, confirmNewPassword   | Update user's password       | ✅ Completed |
 | /users/:userId/delete         | DELETE | -                                              | Remove user's account        | ✅ Completed |
 | /articles                     | GET    | -                                              | Get all articles data        | ✅ Completed |
@@ -24,6 +24,9 @@
 | /diseases                     | GET    | -                                              | Get all diseases data        | ✅ Completed |
 | /diseases/:diseaseId          | GET    | diseaseId                                      | Get diseases data by ID      | ✅ Completed |
 | /disease/:userId/add          | POST   | diseaseId, diseaseName, diseaseAdvice          | Post new disease to database | ✅ Completed |
+| /scraper/                     | POST   | keyword                                        | Retrieve skincare product    | ✅ Completed |
+| /clinic/location              | POST   | latitude, langitude                            | Retrieve nearby clinic       | ✅ Completed |
+| /clinic/search                | POST   | keyword                                        | Retrieve searched nearby clinic  | ✅ Completed |
 
 ## Machine Learning Endpoints
 
