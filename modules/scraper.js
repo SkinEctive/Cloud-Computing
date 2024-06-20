@@ -2,36 +2,39 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 
-const webUrl = "https://www.beautyhaul.com/search?q=";
 const product_data = [];
 
-async function getProduct(url) {
+async function getProduct(keyword) {
+  const webUrl = "https://www.beautyhaul.com/search?q=";
   try {
-    const response = await axios.get(url + "face");
+    const response = await axios.get(webUrl + encodeURIComponent(keyword));
     const $ = cheerio.load(response.data);
 
     const product = $(".btn-block");
     product.each(function () {
-      productImage = $(this).find(".img-max").attr("src");
-      productName = $(this).find(".title").text();
+      const productImage = $(this).find(".img-max").attr("src");
+      const productName = $(this).find(".title").text().trim();
 
-      // console.log(productName);
-
-      product_data.slice(10).push({ productName, productImage });
+      product_data.push({ productName, productImage });
     });
 
-    // fs.writeFile(
-    //   "productData.json",
-    //   JSON.stringify(product_data.slice(1, 12)),
-    //   (err) => {
-    //     if (err) throw err;
-    //     console.log("file disimpen");
-    //   }
-    // );
-    console.log(product_data);
+    const filteredProducts = product_data.slice(2, 14);
+
+    fs.writeFile(
+      "productData.json",
+      JSON.stringify(filteredProducts),
+      (err) => {
+        if (err) throw err;
+        console.log("File has been saved.");
+      }
+    );
+
+    console.log(filteredProducts);
+    return filteredProducts;
   } catch (error) {
     console.error(error);
+    throw new Error("An error occurred while fetching the products.");
   }
 }
 
-getProduct(webUrl);
+module.exports = { getProduct };
