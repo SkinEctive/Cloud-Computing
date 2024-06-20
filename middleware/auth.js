@@ -3,11 +3,8 @@ const prisma = require("../prisma/prisma");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-let refreshTokens = [];
-
-
 function generateAccessToken(payload) {
-  return jwt.sign({ payload }, process.env.SECRET_KEY, { expiresIn: "1d" });
+  return jwt.sign({ payload }, process.env.SECRET_KEY, { expiresIn: 30 * 24 * 60 * 60 });
 }
 
 exports.register = async (req, res) => {
@@ -64,8 +61,6 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-
-
   const user = await prisma.user.findUnique({
     where: {
       userEmail: email,
@@ -86,6 +81,7 @@ exports.login = async (req, res) => {
       res.status(200).json({
         status: true,
         message: "Login Succesfull",
+        data: user,
         accessToken: accessToken,
       });
     } else {
@@ -99,8 +95,3 @@ exports.login = async (req, res) => {
     res.status(500).send();
   }
 };
-
-// exports.logout = async (req, res) => {
-//   refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
-//   res.sendStatus(204);
-// };
